@@ -14,7 +14,9 @@ jobs:
         pyversion: ["cp37-cp37m","cp38-cp38"] # "cp36-cp36m",  "cp39-cp39"
     steps:
     - name: Checkout
-      uses: actions/checkout@packaging
+      uses: actions/checkout@v2
+      with:
+        ref: packaging
     - name: Build the Linux wheels
       run: |
         # must be run in docker, cannot be run as freestanding script for toolchain issues
