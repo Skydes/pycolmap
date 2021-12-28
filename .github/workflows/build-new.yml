@@ -17,6 +17,7 @@ jobs:
       uses: actions/checkout@v2
       with:
         ref: packaging
+        submodules: recursive
     - name: Build the Linux wheels
       run: |
         # must be run in docker, cannot be run as freestanding script for toolchain issues
