@@ -1,7 +1,6 @@
 name: Pybind11 CI
 
 on: workflow_dispatch
-
 jobs:
   linux-build:
     name: Wrapper Linux Build
