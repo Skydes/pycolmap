@@ -1,6 +1,10 @@
 name: Pybind11 CI
 
-on: workflow_dispatch
+on:
+    push:
+        branches:
+            - packaging
+    workflow_dispatch:
 jobs:
   linux-build:
     name: Wrapper Linux Build
