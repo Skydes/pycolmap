@@ -13,8 +13,8 @@ namespace py = pybind11;
 #include "homography_decomposition.cc"
 #include "transformations.cc"
 #include "sift.cc"
-#include "pose_refinement.cc"
 #include "pipeline.cc"
+#include "helpers.h"
 
 #include "reconstruction/reconstruction.cc"
 
@@ -24,42 +24,29 @@ void init_transforms(py::module &);
 PYBIND11_MODULE(pycolmap, m) {
     m.doc() = "COLMAP plugin";
 
-    // Absolute pose.
+    // Estimators
+    auto PyRANSACOptions = py::class_<RANSACOptions>(m, "RANSACOptions")
+        .def(py::init<>([]() {
+            RANSACOptions options;
+            options.max_error = 4.0;
+            options.min_inlier_ratio = 0.01;
+            options.confidence = 0.9999;
+            options.min_num_trials = 1000;
+            options.max_num_trials = 100000;
+            return options;
+        }))
+        .def_readwrite("max_error", &RANSACOptions::max_error)
+        .def_readwrite("min_inlier_ratio", &RANSACOptions::min_inlier_ratio)
+        .def_readwrite("confidence", &RANSACOptions::confidence)
+        .def_readwrite("dyn_num_trials_multiplier", &RANSACOptions::dyn_num_trials_multiplier)
+        .def_readwrite("min_num_trials", &RANSACOptions::min_num_trials)
+        .def_readwrite("max_num_trials", &RANSACOptions::max_num_trials);
+    make_dataclass(PyRANSACOptions);
+
     bind_absolute_pose_estimation(m);
-
-    m.def("rig_absolute_pose_estimation", &rig_absolute_pose_estimation,
-          py::arg("points2D"), py::arg("points3D"),
-          py::arg("cameras"),
-          py::arg("rig_qvecs"), py::arg("rig_tvecs"),
-          py::arg("max_error_px") = 12.0,
-          py::arg("min_inlier_ratio") = 0.01,
-          py::arg("min_num_trials") = 1000,
-          py::arg("max_num_trials") = 100000,
-          py::arg("confidence") = 0.9999,
-          "Absolute pose estimation with non-linear refinement.");
-
-    // Essential matrix.
-    m.def("essential_matrix_estimation",
-          &essential_matrix_estimation,
-          py::arg("points2D1"), py::arg("points2D2"),
-          py::arg("camera1"), py::arg("camera2"),
-          py::arg("max_error_px") = 4.0,
-          py::arg("min_inlier_ratio") = 0.01,
-          py::arg("min_num_trials") = 1000,
-          py::arg("max_num_trials") = 100000,
-          py::arg("confidence") = 0.9999,
-          "LORANSAC + 5-point algorithm.");
-
-    // Fundamental matrix.
-    m.def("fundamental_matrix_estimation",
-          &fundamental_matrix_estimation,
-          py::arg("points2D1"), py::arg("points2D2"),
-          py::arg("max_error_px") = 4.0,
-          py::arg("min_inlier_ratio") = 0.01,
-          py::arg("min_num_trials") = 1000,
-          py::arg("max_num_trials") = 100000,
-          py::arg("confidence") = 0.9999,
-          "LORANSAC + 7-point algorithm.");
+    bind_essential_matrix_estimation(m);
+    bind_fundamental_matrix_estimation(m);
+    bind_generalized_absolute_pose_estimation(m);
 
     // Homography Decomposition.
     m.def("homography_decomposition", &homography_decomposition_estimation,
@@ -76,14 +63,6 @@ PYBIND11_MODULE(pycolmap, m) {
           py::arg("num_octaves") = 4, py::arg("octave_resolution") = 3, py::arg("first_octave") = 0,
           py::arg("edge_thresh") = 10.0, py::arg("peak_thresh") = 0.01, py::arg("upright") = false,
           "Extract SIFT features.");
-
-    // Standalone Pose Refinement
-    m.def("pose_refinement", &pose_refinement,
-          py::arg("tvec"), py::arg("qvec"),
-          py::arg("points2D"), py::arg("points3D"),
-          py::arg("inlier_mask"),
-          py::arg("camera"),
-          "Non-linear refinement.");
 
     // Reconstruction bindings
     init_reconstruction(m);
