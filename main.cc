@@ -24,6 +24,11 @@ void init_transforms(py::module &);
 
 PYBIND11_MODULE(pycolmap, m) {
     m.doc() = "COLMAP plugin";
+#ifdef VERSION_INFO
+    m.attr("__version__") = py::str(VERSION_INFO);
+#else
+    m.attr("__version__") = py::str("dev");
+#endif
 
     // Estimators
     auto PyRANSACOptions = py::class_<RANSACOptions>(m, "RANSACOptions")
