@@ -217,7 +217,7 @@ EIGEN3_INCLUDE_DIRS="/eigen-3.3.9" "${PYBIN}/python" setup.py bdist_wheel --plat
 
 # Bundle external shared libraries into the wheels
 for whl in ./dist/*.whl; do
-    auditwheel repair "$whl" -w /io/wheelhouse/
+    auditwheel repair "$whl" -w /io/wheelhouse/ --no-update-tags
 done
 
 ls -ltrh /io/wheelhouse/
