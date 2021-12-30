@@ -30,7 +30,7 @@ jobs:
         sudo chown -R $(whoami):$(whoami) .
 
     - name: Archive wheels
-      uses: actions/upload-artifact@v1
+      uses: actions/upload-artifact@v2
       with:
         name: pycolmap-${{ matrix.pyversion }}-manylinux2014_x86_64.manylinux_2_17_x86_64.whl
         path: wheelhouse/pycolmap-*-${{ matrix.pyversion }}-manylinux2014_x86_64.manylinux_2_17_x86_64.whl
