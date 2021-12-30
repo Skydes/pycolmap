@@ -122,10 +122,6 @@ for PYVER in ${PYTHON_VERS[@]}; do
     sudo make install
     
     cd $CURRDIR
-    git clone --recursive https://github.com/mihaidusmanu/pycolmap.git
-    cd $CURRDIR/pycolmap
-    # custum version has qt cmake path arg
-    #cp $CURRDIR/setup.py setup.py
     cat setup.py
 
     # flags must be passed, to avoid the issue: `Unsupported compiler -- pybind11 requires C++11 support!`
