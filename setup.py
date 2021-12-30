@@ -38,9 +38,9 @@ class CMakeBuild(build_ext):
             '-DPYTHON_EXECUTABLE=' + sys.executable,
             '-DVERSION_INFO={}'.format(self.distribution.get_version()),
         ]
-        eigen_include_dir = os.environ.get('EIGEN3_INCLUDE_DIRS')
-        if eigen_include_dir is not None:
-            cmake_args += '-DEIGEN3_INCLUDE_DIRS={}'.format(eigen_include_dir)
+        eigen_dir = os.environ.get('EIGEN3_INCLUDE_DIRS')
+        if eigen_dir is not None:
+            cmake_args.append('-DEIGEN3_INCLUDE_DIRS={}'.format(eigen_dir))
 
         cfg = 'Debug' if self.debug else 'Release'
         build_args = ['--config', cfg]
