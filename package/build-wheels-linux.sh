@@ -137,19 +137,7 @@ make -j$(nproc)
 make install
 
 
-
-
 cd $CURRDIR
-# ---------------- Clone COLMAP ----------------------------------------------------------
-git clone https://github.com/colmap/colmap.git
-cd colmap
-git checkout dev
-
-# Set the build directory
-# BUILDDIR="/io/colmap_build"
-# mkdir $BUILDDIR
-# cd $BUILDDIR
-
 
 echo ""
 echo "PYTHON_EXECUTABLE:${PYTHON_EXECUTABLE}"
@@ -193,11 +181,15 @@ make install
 # Install GLEW
 yum -y install glew-devel
 
-# ----------- Build COLMAP ------------------------------------------------------------
+# ---------------- Clone COLMAP ----------------------------------------------------------
 cd $CURRDIR
-BUILDDIR=$CURRDIR/colmap/colmap_build
-mkdir -p $BUILDDIR
-cd $BUILDDIR
+git clone https://github.com/colmap/colmap.git
+cd colmap
+git checkout dev
+
+# ----------- Build COLMAP ------------------------------------------------------------
+mkdir build/
+cd build/
 cmake .. -DCMAKE_BUILD_TYPE=Release \
          -DBoost_USE_STATIC_LIBS=ON \
          -DBOOST_ROOT=/usr/local \
