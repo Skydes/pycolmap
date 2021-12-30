@@ -214,14 +214,15 @@ mkdir -p /io/wheelhouse
 
 # ----------- Build pycolmap wheel -----------------------------------------------------
 cd /io/
-cp package/setup_centos.py setup.py
+#cp package/setup_centos.py setup.py
 cat setup.py
 
 PLAT=manylinux2014_x86_64
 #"${PYBIN}/python" setup.py bdist_wheel --python-tag=$PYTHONVER --plat-name=$PLAT
-"${PYBIN}/python" setup.py bdist_wheel --plat-name=$PLAT #--python-tag=$PYTHONVER 
+EIGEN3_INCLUDE_DIRS="/eigen-3.3.9" "${PYBIN}/python" setup.py bdist_wheel --plat-name=$PLAT #--python-tag=$PYTHONVER 
 
 cp ./dist/*.whl /io/wheelhouse/
+ls -ltrh /io/wheelhouse/
 
 # Bundle external shared libraries into the wheels
 for whl in ./dist/*.whl; do

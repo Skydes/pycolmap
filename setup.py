@@ -36,8 +36,11 @@ class CMakeBuild(build_ext):
         cmake_args = [
             '-DCMAKE_LIBRARY_OUTPUT_DIRECTORY=' + extdir,
             '-DPYTHON_EXECUTABLE=' + sys.executable,
-            f'-DVERSION_INFO={self.distribution.get_version()}',
+            '-DVERSION_INFO={}'.format(self.distribution.get_version()),
         ]
+        eigen_include_dir = os.environ.get('EIGEN3_INCLUDE_DIRS')
+        if eigen_include_dir is not None:
+            cmake_args += '-DEIGEN3_INCLUDE_DIRS={}'.format(eigen_include_dir)
 
         cfg = 'Debug' if self.debug else 'Release'
         build_args = ['--config', cfg]
