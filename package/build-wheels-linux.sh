@@ -215,9 +215,6 @@ PLAT=manylinux2014_x86_64
 #"${PYBIN}/python" setup.py bdist_wheel --python-tag=$PYTHONVER --plat-name=$PLAT
 EIGEN3_INCLUDE_DIRS="/eigen-3.3.9" "${PYBIN}/python" setup.py bdist_wheel --plat-name=$PLAT #--python-tag=$PYTHONVER 
 
-cp ./dist/*.whl /io/wheelhouse/
-ls -ltrh /io/wheelhouse/
-
 # Bundle external shared libraries into the wheels
 for whl in ./dist/*.whl; do
     auditwheel repair "$whl" -w /io/wheelhouse/
