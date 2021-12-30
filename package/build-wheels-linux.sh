@@ -118,6 +118,7 @@ cmake ..
 
 ls -ltrh $CMAKE_PREFIX_PATH
 
+cd $CURRDIR
 # ----------- Install CERES solver -------------------------------------------------------
 yum install libeigen3-dev # was not in COLMAP instructions
 yum install libatlas-base-dev libsuitesparse-dev
