@@ -32,7 +32,7 @@ jobs:
     - name: Archive wheels
       uses: actions/upload-artifact@v1
       with:
-        name: wheels-linux-${{ matrix.pyversion }}
-        path: ./wheelhouse
+        name: pycolmap-${{ matrix.pyversion }}-manylinux2014_x86_64.manylinux_2_17_x86_64.whl
+        path: wheelhouse/pycolmap-*-${{ matrix.pyversion }}-manylinux2014_x86_64.manylinux_2_17_x86_64.whl
         #name: pycolmap-0.0.1-${{ matrix.pyversion }}-manylinux2014_x86_64.manylinux_2_17_x86_64.whl
         #path: wheelhouse/pycolmap-0.0.1-${{ matrix.pyversion }}-manylinux2014_x86_64.manylinux_2_17_x86_64.whl
