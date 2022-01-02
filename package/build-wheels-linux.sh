@@ -186,6 +186,7 @@ cd $CURRDIR
 git clone https://github.com/colmap/colmap.git
 cd colmap
 git checkout dev
+cp /io/package/CMakeConfig.cmake.in ./cmake/
 
 # ----------- Build COLMAP ------------------------------------------------------------
 mkdir build/

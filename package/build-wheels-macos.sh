@@ -102,6 +102,7 @@ for PYVER in ${PYTHON_VERS[@]}; do
     cd $CURRDIR
     cd colmap
     git checkout dev
+    cp $CURRDIR/package/CMakeConfig.cmake.in ./cmake/
     mkdir build_$PYTHONVER
     cd build_$PYTHONVER
     cmake .. -DQt5_DIR=/usr/local/opt/qt@5/lib/cmake/Qt5 -DGUI_ENABLED=OFF
