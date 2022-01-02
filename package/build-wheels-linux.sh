@@ -14,7 +14,7 @@ yum -y install wget
 
 ls -ltrh /io/
 
-yum -y install qt5-qtbase-devel
+#yum -y install qt5-qtbase-devel
 
 # we cannot simply use `pip` or `python`, since points to old 2.7 version
 PYBIN="/opt/python/$PYTHON_VERSION/bin"
@@ -76,10 +76,10 @@ yum install \
     libgoogle-glog-dev \
     libgflags-dev \
     libglew-dev \
-    qtbase5-dev \
-    libqt5opengl5-dev \
     libcgal-dev
-yum install libcgal-qt5-dev
+    #qtbase5-dev \
+    #libqt5opengl5-dev \
+#yum install libcgal-qt5-dev
 
 
 
@@ -163,10 +163,10 @@ yum install libsuitesparse-dev
 yum install libgoogle-glog-dev
 yum install libgflags-dev
 yum install libglew-dev
-yum install qtbase5-dev
-yum install libqt5opengl5-dev
+#yum install qtbase5-dev
+#yum install libqt5opengl5-dev
 yum install libcgal-dev
-yum install libcgal-qt5-dev
+#yum install libcgal-qt5-dev
 
 yum -y install freeimage
 
@@ -193,7 +193,8 @@ cd build/
 cmake .. -DCMAKE_BUILD_TYPE=Release \
          -DBoost_USE_STATIC_LIBS=ON \
          -DBOOST_ROOT=/usr/local \
-         -DEIGEN3_INCLUDE_DIRS=/eigen-3.3.9
+         -DEIGEN3_INCLUDE_DIRS=/eigen-3.3.9 \
+         -DGUI_ENABLED=OFF
 
 if [ $ec -ne 0 ]; then
     echo "Error:"

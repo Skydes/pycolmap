@@ -25,7 +25,7 @@ brew update
 brew upgrade
 brew install wget python cmake || true
 # TODO: try without brew install of boost, but use version below
-brew install git cmake boost eigen freeimage glog gflags suite-sparse ceres-solver glew cgal qt5
+brew install git cmake boost eigen freeimage glog gflags suite-sparse ceres-solver glew cgal
 
 brew install llvm libomp
 
@@ -33,7 +33,7 @@ brew info gcc
 brew upgrade gcc
 brew info gcc
 
-echo 'export PATH="/usr/local/opt/qt@5/bin:$PATH"' >> /Users/runner/.bash_profile
+#echo 'export PATH="/usr/local/opt/qt@5/bin:$PATH"' >> /Users/runner/.bash_profile
 
 CURRDIR=$(pwd)
 ls -ltrh $CURRDIR
@@ -68,7 +68,7 @@ VERSION_NUMBER=${split_array[1]}
 
 git clone https://github.com/colmap/colmap.git
 
-sed -i -e 's/Qt5 5.4/Qt5 5.15.2/g' colmap/CMakeLists.txt
+#sed -i -e 's/Qt5 5.4/Qt5 5.15.2/g' colmap/CMakeLists.txt
 
 for compiler in cc c++ gcc g++ clang clang++
 do
@@ -104,7 +104,7 @@ for PYVER in ${PYTHON_VERS[@]}; do
     git checkout dev
     mkdir build_$PYTHONVER
     cd build_$PYTHONVER
-    cmake .. -DQt5_DIR=/usr/local/opt/qt@5/lib/cmake/Qt5
+    cmake .. -DQt5_DIR=/usr/local/opt/qt@5/lib/cmake/Qt5 -DGUI_ENABLED=OFF
 
     # examine exit code of last command
     ec=$?
