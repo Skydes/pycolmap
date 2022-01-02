@@ -125,9 +125,7 @@ yum install libatlas-base-dev libsuitesparse-dev
 yum install libgoogle-glog-dev libgflags-dev # was not in COLMAP instructions
 git clone https://ceres-solver.googlesource.com/ceres-solver
 cd ceres-solver
-#git checkout $(git describe --tags) # Checkout the latest release
-# the tip of master is currently bugged
-git checkout c2fab6502e5a341ff644c2bb2c5171ebd882b2d6
+git checkout $(git describe --tags) # Checkout the latest release
 mkdir build
 cd build
 cmake .. -DBUILD_TESTING=OFF \
@@ -215,7 +213,7 @@ cat setup.py
 
 PLAT=manylinux2014_x86_64
 #"${PYBIN}/python" setup.py bdist_wheel --python-tag=$PYTHONVER --plat-name=$PLAT
-EIGEN3_INCLUDE_DIRS="/eigen-3.3.9" "${PYBIN}/python" setup.py bdist_wheel --plat-name=$PLAT #--python-tag=$PYTHONVER 
+CXXFLAGS="-fPIC" EIGEN3_INCLUDE_DIRS="/eigen-3.3.9" "${PYBIN}/python" setup.py bdist_wheel --plat-name=$PLAT #--python-tag=$PYTHONVER 
 
 # Bundle external shared libraries into the wheels
 for whl in ./dist/*.whl; do
