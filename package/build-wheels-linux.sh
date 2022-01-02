@@ -184,12 +184,11 @@ cd $CURRDIR
 git clone https://github.com/colmap/colmap.git
 cd colmap
 git checkout dev
-cp /io/package/CMakeConfig.cmake.in ./cmake/
 
 # ----------- Build COLMAP ------------------------------------------------------------
 mkdir build/
 cd build/
-cmake .. -DCMAKE_BUILD_TYPE=Release \
+CXXFLAGS="-fPIC" cmake .. -DCMAKE_BUILD_TYPE=Release \
          -DBoost_USE_STATIC_LIBS=ON \
          -DBOOST_ROOT=/usr/local \
          -DEIGEN3_INCLUDE_DIRS=/eigen-3.3.9 \
@@ -213,7 +212,7 @@ cat setup.py
 
 PLAT=manylinux2014_x86_64
 #"${PYBIN}/python" setup.py bdist_wheel --python-tag=$PYTHONVER --plat-name=$PLAT
-CXXFLAGS="-fPIC" EIGEN3_INCLUDE_DIRS="/eigen-3.3.9" "${PYBIN}/python" setup.py bdist_wheel --plat-name=$PLAT #--python-tag=$PYTHONVER 
+EIGEN3_INCLUDE_DIRS="/eigen-3.3.9" "${PYBIN}/python" setup.py bdist_wheel --plat-name=$PLAT #--python-tag=$PYTHONVER 
 
 # Bundle external shared libraries into the wheels
 for whl in ./dist/*.whl; do
