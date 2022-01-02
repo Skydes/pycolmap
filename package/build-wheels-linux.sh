@@ -188,7 +188,7 @@ git checkout dev
 # ----------- Build COLMAP ------------------------------------------------------------
 mkdir build/
 cd build/
-CXXFLAGS="-fPIC" cmake .. -DCMAKE_BUILD_TYPE=Release \
+CXXFLAGS="-fPIC" CFLAGS="-fPIC" cmake .. -DCMAKE_BUILD_TYPE=Release \
          -DBoost_USE_STATIC_LIBS=ON \
          -DBOOST_ROOT=/usr/local \
          -DEIGEN3_INCLUDE_DIRS=/eigen-3.3.9 \
